@@ -10,8 +10,8 @@ io.on('connection', function(socket){
     io.emit('chat message', msg);
   });
 
-  socket.on('random-thing', function(msg) {
-  	io.emit('random-thing', 'random stuff--' + msg);
+  socket.on('nick-thing', function(msg) {
+  	socket.emit('nick-thing', msg);
   });
 });
 

@@ -5,18 +5,22 @@
     <title>Socket.IO chat</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
+      body { font: 13px Helvetica, Arial; width: 80%;}
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      .myNick {width: 50%; margin-left: 30%;text-align: center; background: rgb(130, 224, 255);border-style: solid; border-radius: 2%; border-color: cadetblue;}
+      .myNickBlue {font-style: oblique; text-align: center; background-color: #cccccc;border-style: solid; border-radius: 2%; border-color: royalblue;}
+
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
     </style>
   </head>
   <body>
-  <button class="random">Click meee!</button>
-  <label class="label">deneme</label>
+  <button class="nickbutton">Take a nickname!</button>
+  <input class="nickname" placeholder="Anonim" />
+  <br>  <h1 class='myNick'>Anonim</h1>
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
@@ -24,23 +28,27 @@
       <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-        $('.random').click(function() {
-  	 		socket.emit('random-thing', "asdaf");
+        $('.nickbutton').click(function() {
+  	 		socket.emit('nick-thing', $('.nickname').val());
 	      	 return false;
       });
 	      var socket = io();
 	      $('form').submit(function(){
-	        socket.emit('chat message', $('#m').val());
+          var msg={
+              owner : $('.myNick').text(),
+              message : $('#m').val()
+          };
+              socket.emit('chat message', msg);
 	        $('#m').val('');
 	        return false;
 	      });
 	      socket.on('chat message', function(msg){
-	        $('#messages').append($('<li>').text(msg));
+	        $('#messages').append("<li><label class = 'myNickBlue'>  " +msg.owner + "  </label>:   " + msg.message + "</li>");
 	      });
 
 
-	      socket.on('random-thing', function(random){
-	        $('.label').after($('<label>').text(random));
+	      socket.on('nick-thing', function(nick){
+	        $('.myNick').text(nick);
 	      });
     </script>
   </body>
