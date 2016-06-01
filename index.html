@@ -24,19 +24,14 @@
       <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-
-    $(window).ready(function() {
-
-      $('body').click(function() {
-  	 		//socket.emit('random-thing', "");
-	      	 alert('cagrii');
+        $('.random').click(function() {
+  	 		socket.emit('random-thing', "asdaf");
 	      	 return false;
       });
 	      var socket = io();
 	      $('form').submit(function(){
 	        socket.emit('chat message', $('#m').val());
 	        $('#m').val('');
-	        alert('cagrii');
 	        return false;
 	      });
 	      socket.on('chat message', function(msg){
@@ -45,9 +40,8 @@
 
 
 	      socket.on('random-thing', function(random){
-	        $('.label').append('<label>'.random.'</label>');
+	        $('.label').after($('<label>').text(random));
 	      });
-      });
     </script>
   </body>
 </html>
