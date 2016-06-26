@@ -1,9 +1,0 @@
-
-{
-  "firebase": "blogexample",
-  "public": "./",
-  "rewrites": [ {
-  "source": "**",
-  "destination": "/index.html"
-}]
-}
